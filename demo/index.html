@@ -67,6 +67,16 @@
         QrScanner.scanImage(file)
             .then(result => setResult(fileQrResult, result))
             .catch(e => setResult(fileQrResult, e || 'No QR code found.'));
+            if( fileQrResult != 'none'){
+                const scanned_data = fileQrResult;
+                const url_string = window.location.href; 
+                const url = new URL(url_string); 
+                const record_id = url.searchParams.get("recordid");
+                alert(record_id);
+                const urlfinal = 'https://valueretaildevtrail-dev-ed--c.eu12.visual.force.com/apex/testarQR_3rd_Option?recordid='+ record_id + 'SCANNED_DATA='+ scanned_data;
+                sforce.one.navigateToURL(urlfinal, true);
+            }
+        
     });
     // ####### debug mode related code #######
     debugCheckbox.addEventListener('change', () => setDebugMode(debugCheckbox.checked));
