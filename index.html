@@ -55,7 +55,7 @@
         label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
     }
     // ####### Web Cam Scanning #######
-    const scanner = new QrScanner(video, result => setResult(camQrResult, result));
+    const qrScanner = new QrScanner(videoElem, result => console.log('decoded qr code:', result));
     scanner.start();
     // ####### File Scanning #######
     fileSelector.addEventListener('change', event => {
