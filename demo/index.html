@@ -67,7 +67,8 @@
         QrScanner.scanImage(file)
             .then(result => setResult(fileQrResult, result))
             .catch(e => setResult(fileQrResult, e || 'No QR code found.'));
-            if( fileQrResult != 'none'){
+           // if( fileQrResult != 'none'){
+          if( !file){
                 const scanned_data = fileQrResult;
                 const url_string = window.location.href; 
                 const url = new URL(url_string); 
