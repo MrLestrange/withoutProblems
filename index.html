@@ -1,37 +1,98 @@
-## Welcome to GitHub Pages
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QR Scanner Demo</title>
+</head>
+<body>
+<style>
+    canvas {
+        display: none;
+    }
+    hr {
+        margin-top: 32px;
+    }
+    input[type="file"] {
+        display: block;
+        margin-bottom: 16px;
+    }
+    div {
+        margin-bottom: 16px;
+    }
+</style>
+<h1>Scan from WebCam:</h1>
+<div>
+    <video muted autoplay playsinline id="qr-video"></video>
+    <canvas id="debug-canvas"></canvas>
+</div>
+<div>
+    <input type="checkbox" id="debug-checkbox">
+    <span>Show debug image</span>
+</div>
+<b>Detected QR code: </b>
+<span id="cam-qr-result">None</span>
+<hr>
 
-You can use the [editor on GitHub](https://github.com/MrLestrange/withoutProblems/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+<h1>Scan from File:</h1>
+<input type="file" id="file-selector">
+<b>Detected QR code: </b>
+<span id="file-qr-result">None</span>
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/MrLestrange/withoutProblems/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+<script type="module">
+    import QrScanner from "../qr-scanner.min.js";
+    const video = document.getElementById('qr-video');
+    const debugCheckbox = document.getElementById('debug-checkbox');
+    const debugCanvas = document.getElementById('debug-canvas');
+    const debugCanvasContext = debugCanvas.getContext('2d');
+    const camQrResult = document.getElementById('cam-qr-result');
+    const fileSelector = document.getElementById('file-selector');
+    const fileQrResult = document.getElementById('file-qr-result');
+    function setResult(label, result) {
+        label.textContent = result;
+        label.style.color = 'teal';
+        clearTimeout(label.highlightTimeout);
+        label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
+    }
+    // ####### Web Cam Scanning #######
+    const scanner = new QrScanner(video, result => setResult(camQrResult, result));
+    scanner.start();
+    // ####### File Scanning #######
+    fileSelector.addEventListener('change', event => {
+        const file = fileSelector.files[0];
+        if (!file) {
+            return;
+        }
+        QrScanner.scanImage(file)
+            .then(result => setResult(fileQrResult, result))
+            .catch(e => setResult(fileQrResult, e || 'No QR code found.'));
+    });
+    // ####### debug mode related code #######
+    debugCheckbox.addEventListener('change', () => setDebugMode(debugCheckbox.checked));
+    function setDebugMode(isDebug) {
+        const worker = scanner._qrWorker;
+        worker.postMessage({
+            type: 'setDebug',
+            data: isDebug
+        });
+        if (isDebug) {
+            debugCanvas.style.display = 'block';
+            worker.addEventListener('message', handleDebugImage);
+        } else {
+            debugCanvas.style.display = 'none';
+            worker.removeEventListener('message', handleDebugImage);
+        }
+    }
+    function handleDebugImage(event) {
+        const type = event.data.type;
+        if (type === 'debugImage') {
+            const imageData = event.data.data;
+            if (debugCanvas.width !== imageData.width || debugCanvas.height !== imageData.height) {
+                debugCanvas.width = imageData.width;
+                debugCanvas.height = imageData.height;
+            }
+            debugCanvasContext.putImageData(imageData, 0, 0);
+        }
+    }
+</script>
+</body>
+</html>
