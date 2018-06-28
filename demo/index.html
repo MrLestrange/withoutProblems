@@ -37,6 +37,9 @@
 <input type="file" id="file-selector">
 <b>Detected QR code: </b>
 <span id="file-qr-result">None</span>
+
+    
+    
 <script type="module">
     import QrScanner from "../qr-scanner.min.js";
     const video = document.getElementById('qr-video');
@@ -52,11 +55,19 @@
         clearTimeout(label.highlightTimeout);
         label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
     }
-    
     // ####### Web Cam Scanning #######
     const scanner = new QrScanner(video, result => setResult(camQrResult, result));
-    scanner.start
-    
+    scanner.start();
+    // ####### File Scanning #######
+    fileSelector.addEventListener('change', event => {
+        const file = fileSelector.files[0];
+        if (!file) {
+            return;
+        }
+        QrScanner.scanImage(file)
+            .then(result => setResult(fileQrResult, result))
+            .catch(e => setResult(fileQrResult, e || 'No QR code found.'));
+    });
     // ####### debug mode related code #######
     debugCheckbox.addEventListener('change', () => setDebugMode(debugCheckbox.checked));
     function setDebugMode(isDebug) {
