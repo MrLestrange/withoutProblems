@@ -23,7 +23,7 @@
 </style>
 <h1>Scan from WebCam:</h1>
 <div>
-    <video muted autoplay playsinline id="qr-video"></video>
+    <video muted="" autoplay="" playsinline="" id="qr-video" style="transform: scaleX(-1);"></video>
     <canvas id="debug-canvas"></canvas>
 </div>
 <div>
@@ -33,11 +33,6 @@
 <b>Detected QR code: </b>
 <span id="cam-qr-result">None</span>
 <hr>
-
-<h1>Scan from File:</h1>
-<input type="file" id="file-selector">
-<b>Detected QR code: </b>
-<span id="file-qr-result">None</span>
 
 <script type="module">
     import QrScanner from "../qr-scanner.min.js";
@@ -55,7 +50,7 @@
         label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
     }
     // ####### Web Cam Scanning #######
-    const qrScanner = new QrScanner(videoElem, result => console.log('decoded qr code:', result));
+    const scanner = new QrScanner(video, result => setResult(camQrResult, result));
     scanner.start();
     // ####### File Scanning #######
     fileSelector.addEventListener('change', event => {
