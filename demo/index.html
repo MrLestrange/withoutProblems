@@ -20,15 +20,23 @@
         margin-bottom: 16px;
     }
 </style>
-<h1>Scan the Bag QR Code</h1>
+<h1>Scan Bags:</h1>
 <div>
     <video muted autoplay playsinline id="qr-video"></video>
     <canvas id="debug-canvas"></canvas>
 </div>
-
+<div>
+    <input type="checkbox" id="debug-checkbox">
+    <span>Show debug image</span>
+</div>
 <b>Detected QR code: </b>
 <span id="cam-qr-result">None</span>
+<hr>
 
+<h1>Scan from File:</h1>
+<input type="file" id="file-selector">
+<b>Detected QR code: </b>
+<span id="file-qr-result">None</span>
 <script type="module">
     import QrScanner from "../qr-scanner.min.js";
     const video = document.getElementById('qr-video');
