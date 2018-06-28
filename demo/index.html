@@ -58,6 +58,17 @@
     // ####### Web Cam Scanning #######
     const scanner = new QrScanner(video, result => setResult(camQrResult, result));
     scanner.start();
+    
+                if(!fileQrResult){
+
+                const scanned_data = fileQrResult;
+                const url_string = window.location.href; 
+                const url = new URL(url_string); 
+                const record_id = url.searchParams.get("recordid");
+                alert(record_id);
+                const urlfinal = 'https://valueretaildevtrail-dev-ed--c.eu12.visual.force.com/apex/testarQR_3rd_Option?recordid='+ record_id + 'SCANNED_DATA='+ scanned_data;
+                sforce.one.navigateToURL(urlfinal, true);
+                }
     // ####### File Scanning #######
     fileSelector.addEventListener('change', event => {
         const file = fileSelector.files[0];
@@ -67,16 +78,7 @@
         QrScanner.scanImage(file)
             .then(result => setResult(fileQrResult, result))
             .catch(e => setResult(fileQrResult, e || 'No QR code found.'));
-           // if( fileQrResult != 'none'){
-          if( !file){
-                const scanned_data = fileQrResult;
-                const url_string = window.location.href; 
-                const url = new URL(url_string); 
-                const record_id = url.searchParams.get("recordid");
-                alert(record_id);
-                const urlfinal = 'https://valueretaildevtrail-dev-ed--c.eu12.visual.force.com/apex/testarQR_3rd_Option?recordid='+ record_id + 'SCANNED_DATA='+ scanned_data;
-                sforce.one.navigateToURL(urlfinal, true);
-            }
+           
         
     });
     // ####### debug mode related code #######
