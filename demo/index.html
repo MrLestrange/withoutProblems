@@ -45,19 +45,11 @@
         clearTimeout(label.highlightTimeout);
         label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
     }
+    
     // ####### Web Cam Scanning #######
     const scanner = new QrScanner(video, result => setResult(camQrResult, result));
-    scanner.start();
-    // ####### File Scanning #######
-    fileSelector.addEventListener('change', event => {
-        const file = fileSelector.files[0];
-        if (!file) {
-            return;
-        }
-        QrScanner.scanImage(file)
-            .then(result => setResult(fileQrResult, result))
-            .catch(e => setResult(fileQrResult, e || 'No QR code found.'));
-    });
+    scanner.start
+    
     // ####### debug mode related code #######
     debugCheckbox.addEventListener('change', () => setDebugMode(debugCheckbox.checked));
     function setDebugMode(isDebug) {
