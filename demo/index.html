@@ -6,7 +6,7 @@
 </head>
 <script>
       function toggleFullscreen(elem) { 
-      window.scrollTo(0,document.body.scrollHeight);
+      window.scrollTo(0,document.querySelector(".scrollingContainer").scrollHeight);
       elem = elem || document.documentElement;
       if (!document.fullscreenElement && !document.mozFullScreenElement &&
         !document.webkitFullscreenElement && !document.msFullscreenElement) {
