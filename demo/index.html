@@ -26,7 +26,7 @@
 </style>
 <h1>Scan Bags:</h1>
 <div>
-    <video muted autoplay playsinline id="qr-video" style="width:50%; ></video>
+    <video muted autoplay playsinline id="qr-video" style="width:50%"; ></video>
 </div>
 <span id="cam-qr-result">None</span>
 <button id="btnFullscreen" type="button">Toggle Fullscreen</button>
@@ -47,7 +47,7 @@
         label.textContent = result;
         label.style.color = 'teal';
         clearTimeout(label.highlightTimeout);
-        label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 200);
+        label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
             
                if(result){
                 alert(result);
