@@ -42,6 +42,7 @@
     
 <script type="module">
     import QrScanner from "../qr-scanner.min.js";
+    import sforce from "jsforce.js";
     const video = document.getElementById('qr-video');
     const debugCheckbox = document.getElementById('debug-checkbox');
     const debugCanvas = document.getElementById('debug-canvas');
@@ -63,8 +64,8 @@
                 const record_id = url.searchParams.get("recordid");
                 alert(record_id);
                 const urlfinal = 'https://valueretaildevtrail-dev-ed--c.eu12.visual.force.com/apex/testarQR_3rd_Option?recordid='+ record_id + '&SCANNED_DATA='+ scanned_data;
-                //sforce.one.navigateToURL(urlfinal, true);
-                window.open(urlfinal,'_top');
+                sforce.one.navigateToURL(urlfinal, true);
+                //window.open(urlfinal,'_top');
                 //window.open(urlfinal);
                 //sforce.one.navigateToURL(urlfinal);
         
