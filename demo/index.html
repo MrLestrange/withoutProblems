@@ -63,7 +63,9 @@
                 const record_id = url.searchParams.get("recordid");
                 alert(record_id);
                 const urlfinal = 'https://valueretaildevtrail-dev-ed--c.eu12.visual.force.com/apex/testarQR_3rd_Option?recordid='+ record_id + 'SCANNED_DATA='+ scanned_data;
-                sforce.one.navigateToURL(urlfinal, true);
+             //   sforce.one.navigateToURL(urlfinal, true);
+               window.open(urlfinal);
+        
              //   }
     }
     // ####### Web Cam Scanning #######
