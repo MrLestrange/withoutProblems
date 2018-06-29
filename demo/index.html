@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body bgcolor="#000000">
+<body  onload="toggleFullscreen()" bgcolor="#000000">
 <style>
     
     canvas {
@@ -42,11 +42,7 @@
     const camQrResult = document.getElementById('cam-qr-result');
     //const fileSelector = document.getElementById('file-selector');
     //const fileQrResult = document.getElementById('file-qr-result');
-      
-   window.onload = function() { 
-      toggleFullscreen();
-   }
-    
+
       function toggleFullscreen(elem) { 
       elem = elem || document.documentElement;
       if (!document.fullscreenElement && !document.mozFullScreenElement &&
