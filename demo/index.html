@@ -38,6 +38,11 @@
     const camQrResult = document.getElementById('cam-qr-result');
     //const fileSelector = document.getElementById('file-selector');
     //const fileQrResult = document.getElementById('file-qr-result');
+    
+    document.getElementById('btnFullscreen').addEventListener('click', function() {
+    toggleFullscreen();
+    });
+    
     function setResult(label, result) {
         label.textContent = result;
         label.style.color = 'teal';
