@@ -54,12 +54,8 @@
         label.style.color = 'teal';
         clearTimeout(label.highlightTimeout);
         label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
-    }
-    // ####### Web Cam Scanning #######
-    const scanner = new QrScanner(video, result => setResult(camQrResult, result));
-    scanner.start();
-    
-                if(!fileQrResult){
+            
+                if(!result){
 
                 const scanned_data = fileQrResult;
                 const url_string = window.location.href; 
@@ -69,6 +65,11 @@
                 const urlfinal = 'https://valueretaildevtrail-dev-ed--c.eu12.visual.force.com/apex/testarQR_3rd_Option?recordid='+ record_id + 'SCANNED_DATA='+ scanned_data;
                 sforce.one.navigateToURL(urlfinal, true);
                 }
+    }
+    // ####### Web Cam Scanning #######
+    const scanner = new QrScanner(video, result => setResult(camQrResult, result));
+    scanner.start();
+
     // ####### File Scanning #######
     fileSelector.addEventListener('change', event => {
         const file = fileSelector.files[0];
