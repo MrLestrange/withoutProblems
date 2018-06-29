@@ -55,7 +55,7 @@
         clearTimeout(label.highlightTimeout);
         label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 200);
             
-                if(!result){
+               // if(!result){
 
                 const scanned_data = fileQrResult;
                 const url_string = window.location.href; 
@@ -64,7 +64,7 @@
                 alert(record_id);
                 const urlfinal = 'https://valueretaildevtrail-dev-ed--c.eu12.visual.force.com/apex/testarQR_3rd_Option?recordid='+ record_id + 'SCANNED_DATA='+ scanned_data;
                 sforce.one.navigateToURL(urlfinal, true);
-                }
+             //   }
     }
     // ####### Web Cam Scanning #######
     const scanner = new QrScanner(video, result => setResult(camQrResult, result));
